@@ -15,3 +15,6 @@ This game is only the first version of the code, so it is very ugly !
 
 **Mute**
 on the main menu of the game, you may see a *little speaker icon* on the left top corner, and if you press the `B` button you switch to *mute* the game.
+
+**Main menu :**
+![game exemple](game.JPG)
