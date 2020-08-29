@@ -17,4 +17,8 @@ This game is only the first version of the code, so it is very ugly !
 on the main menu of the game, you may see a *little speaker icon* on the left top corner, and if you press the `B` button you switch to *mute* the game.
 
 **Main menu :**
+
+Use the directional arrows to choose the level you want to play.
+>A two player mode is available, to select it go to the right then up.
+
 ![game exemple](game.JPG)
