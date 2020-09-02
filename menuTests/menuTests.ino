@@ -2,6 +2,7 @@
 Arduboy2 ard;
 
 int bSpeed, rSize;
+int settingCursor;
 
 /**
  * 0 == Menu
@@ -17,6 +18,7 @@ void setup() {
   bSpeed = 40;
   rSize = 10;
   gameMode = 0;
+  settingCursor = 1;
 }
 
 void loop() {
@@ -28,7 +30,7 @@ void loop() {
     game();
     break;
     case 2:
-    setting(&bSpeed, &rSize);
+    setting(&settingCursor, &bSpeed, &rSize);
     break;
     default:
     menu();
@@ -155,13 +157,18 @@ bool startBtnPressed(const unsigned int waitTimeMs){
   return false;
 }
 
-void setting(int *ballSpeed, int *racketSize){
-  int cursorPosition = 0;
+void setting(int *cursorPosition, int *ballSpeed, int *racketSize){
+  mooveCursor(cursorPosition);
   ard.clear();
+  ard.setCursor(0,0);
+  ard.print("cursor value is : ");
+  ard.print(*cursorPosition);
   //===========================draw OK button
-  
+  ard.drawRect(WIDTH-15, HEIGHT-12, 15, 11);
+  ard.setCursor(WIDTH-13, HEIGHT-10);
+  ard.print(F("OK"));  
   bool okPressed = false;
-  while(!okPressed && cursorPosition==0){
+  while(!okPressed && (*cursorPosition)==0){
     ard.setTextColor(WHITE);
     ard.setTextBackground(BLACK);
     ard.drawLine(WIDTH-14, HEIGHT-11, WIDTH-14, HEIGHT-3, BLACK);
@@ -171,7 +178,7 @@ void setting(int *ballSpeed, int *racketSize){
     ard.print(F("OK"));
     ard.display();
     okPressed = startBtnPressed(150);
-    mooveCursor(&cursorPosition);
+    mooveCursor(cursorPosition);
     ard.setTextColor(BLACK);
     ard.setTextBackground(WHITE);
     ard.drawLine(WIDTH-14, HEIGHT-11, WIDTH-14, HEIGHT-3, WHITE);
@@ -181,11 +188,11 @@ void setting(int *ballSpeed, int *racketSize){
     ard.print(F("OK"));
     ard.display();
     okPressed = startBtnPressed(100);
-    mooveCursor(&cursorPosition);
+    mooveCursor(cursorPosition);
   }
   ard.setTextColor(WHITE);
   ard.setTextBackground(BLACK);
-  if(okPressed && cursorPosition==0){//validate so goto menu
+  if(okPressed && *cursorPosition==0){//validate so goto menu
     gameMode = 0;
   }
   //============================END OK button
@@ -194,9 +201,11 @@ void setting(int *ballSpeed, int *racketSize){
 
 void mooveCursor(int *cursorPointer){
   if(ard.pressed(UP_BUTTON) || ard.pressed(RIGHT_BUTTON)){
+    delay(170);
     (*cursorPointer)++;
   }
   if(ard.pressed(DOWN_BUTTON) || ard.pressed(LEFT_BUTTON)){
+    delay(170);
     (*cursorPointer)--;
   }
 }
