@@ -37,7 +37,7 @@ void game(){
   ard.setCursor(0,0);
   ard.print("Gaming");
   ard.display();
-  delay(500);
+  delay(1000);
   gameMode = 0;
 }
 void menu(){
@@ -67,7 +67,10 @@ void menu(){
   ard.print(F("PONG"));
   ard.setTextSize(1);
   startPressed = false;
+  bool userChooseToGoGame = true;
   while(!startPressed){
+    
+    //===========WHITE ON BLACK
     ard.setTextColor(WHITE);
     ard.setTextBackground(BLACK);
     //start rect
@@ -85,29 +88,50 @@ void menu(){
     ard.drawLine(WIDTH-17,41,WIDTH-17,50,BLACK);
     ard.drawRect(WIDTH-55,40,40,11, WHITE);
     ard.display();
-    startPressed = startBtnPressed(750);
+
+    startPressed = startBtnPressed(250);
+
+    //===========BLACK ON WHITE
     ard.setTextColor(BLACK);
     ard.setTextBackground(WHITE);
-    //start rect
-    ard.setCursor(12,42);
-    ard.print(">START");
-    ard.drawLine(11,41,11,50,WHITE);
-    ard.drawLine(10,41,49,41,WHITE);
-    ard.drawLine(48,41,48,50,WHITE);
-    ard.drawRect(10,40,40,11, WHITE);
-    //seting rect
-    ard.setCursor(WIDTH-53,42);
-    ard.print("SETING");
-    ard.drawLine(WIDTH-54,41,WIDTH-54,50,WHITE);
-    ard.drawLine(WIDTH-55,41,WIDTH-17,41,WHITE);
-    ard.drawLine(WIDTH-17,41,WIDTH-17,50,WHITE);
-    ard.drawRect(WIDTH-55,40,40,11, WHITE);
+    if(userChooseToGoGame){
+      //start rect
+      ard.setCursor(12,42);
+      ard.print(">START");
+      ard.drawLine(11,41,11,50,WHITE);
+      ard.drawLine(10,41,49,41,WHITE);
+      ard.drawLine(48,41,48,50,WHITE);
+      ard.drawRect(10,40,40,11, WHITE);
+    }else{
+      //seting rect
+      ard.setCursor(WIDTH-53,42);
+      ard.print("SETING");
+      ard.drawLine(WIDTH-54,41,WIDTH-54,50,WHITE);
+      ard.drawLine(WIDTH-55,41,WIDTH-17,41,WHITE);
+      ard.drawLine(WIDTH-17,41,WIDTH-17,50,WHITE);
+      ard.drawRect(WIDTH-55,40,40,11, WHITE);
+    }
     ard.display();
-    startPressed = startBtnPressed(700);
+    
+    startPressed = startBtnPressed(200);
+
+    //============
+    if(ard.pressed(LEFT_BUTTON)){
+      userChooseToGoGame = true;
+    }
+    if(ard.pressed(RIGHT_BUTTON)){
+      userChooseToGoGame = false;
+    }
+    //============
   }
   ard.setTextColor(WHITE);
   ard.setTextBackground(BLACK);
-  gameMode = 1;
+  
+  if(userChooseToGoGame){
+    gameMode = 1;
+  }else{
+    gameMode = 2;
+  }
 }
 void setting(){
 }
