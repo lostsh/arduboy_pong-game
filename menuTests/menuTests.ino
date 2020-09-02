@@ -133,8 +133,6 @@ void menu(){
     gameMode = 2;
   }
 }
-void setting(){
-}
 
 bool startBtnPressed(const unsigned int waitTimeMs){
   for(int i=0;i<waitTimeMs;i++){
@@ -146,4 +144,7 @@ bool startBtnPressed(const unsigned int waitTimeMs){
     }
   }
   return false;
+}
+
+void setting(){
 }
