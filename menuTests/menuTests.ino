@@ -18,7 +18,7 @@ void setup() {
   bSpeed = 40;
   rSize = 10;
   gameMode = 0;
-  settingCursor = 1;
+  settingCursor = 2;
 }
 
 void loop() {
@@ -163,6 +163,20 @@ void setting(int *cursorPosition, int *ballSpeed, int *racketSize){
   ard.setCursor(0,0);
   ard.print("cursor value is : ");
   ard.print(*cursorPosition);
+  ard.print("\n ball speed : ");
+  ard.print(*ballSpeed);
+  ard.print("\n racket size : ");
+  ard.print(*racketSize);
+  //=========================================ball speed
+  if(*cursorPosition==2){
+    *ballSpeed = updateValue(*ballSpeed, 20, 60);
+  }
+  //=====================================end ball speed
+  //=========================================racket size
+  if(*cursorPosition==1){
+    *racketSize = updateValue(*racketSize, 5, 30);
+  }
+  //=====================================end racket size
   //===========================draw OK button
   ard.drawRect(WIDTH-15, HEIGHT-12, 15, 11);
   ard.setCursor(WIDTH-13, HEIGHT-10);
@@ -200,12 +214,23 @@ void setting(int *cursorPosition, int *ballSpeed, int *racketSize){
 }
 
 void mooveCursor(int *cursorPointer){
-  if(ard.pressed(UP_BUTTON) || ard.pressed(RIGHT_BUTTON)){
+  if(ard.pressed(RIGHT_BUTTON)){
+    delay(170);
+    (*cursorPointer)--;
+  }
+  if(ard.pressed(LEFT_BUTTON)){
     delay(170);
     (*cursorPointer)++;
   }
-  if(ard.pressed(DOWN_BUTTON) || ard.pressed(LEFT_BUTTON)){
+}
+
+int updateValue(const int initValue, const int infVal, const int supVal){
+  if(ard.pressed(UP_BUTTON) && initValue+1<=supVal){
     delay(170);
-    (*cursorPointer)--;
+    return initValue+1;
+  }
+  if(ard.pressed(DOWN_BUTTON) && initValue-1>=infVal){
+    delay(170);
+    return initValue-1;
   }
 }
