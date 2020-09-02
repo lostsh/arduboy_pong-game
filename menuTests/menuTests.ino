@@ -1,6 +1,8 @@
 #include <Arduboy2.h>
 Arduboy2 ard;
 
+int bSpeed, rSize;
+
 /**
  * 0 == Menu
  * 1 == Game
@@ -11,7 +13,9 @@ unsigned int gameMode;
 void setup() {
   ard.begin();
   ard.setFrameRate(15);
-  
+
+  bSpeed = 40;
+  rSize = 10;
   gameMode = 0;
 }
 
@@ -24,7 +28,7 @@ void loop() {
     game();
     break;
     case 2:
-    setting();
+    setting(&bSpeed, &rSize);
     break;
     default:
     menu();
@@ -35,10 +39,15 @@ void loop() {
 void game(){
   ard.clear();
   ard.setCursor(0,0);
-  ard.print("Gaming");
+  ard.setTextWrap(true);
+  ard.print("Gaming : Ball celrity is : ");
+  ard.print(bSpeed);
+  ard.print(" and racket size is : ");
+  ard.print(rSize);
   ard.display();
-  delay(1000);
-  gameMode = 0;
+  if(startBtnPressed(200)){
+    gameMode = 0;
+  }
 }
 void menu(){
   //=========================Main menu 
@@ -146,5 +155,48 @@ bool startBtnPressed(const unsigned int waitTimeMs){
   return false;
 }
 
-void setting(){
+void setting(int *ballSpeed, int *racketSize){
+  int cursorPosition = 0;
+  ard.clear();
+  //===========================draw OK button
+  
+  bool okPressed = false;
+  while(!okPressed && cursorPosition==0){
+    ard.setTextColor(WHITE);
+    ard.setTextBackground(BLACK);
+    ard.drawLine(WIDTH-14, HEIGHT-11, WIDTH-14, HEIGHT-3, BLACK);
+    ard.drawLine(WIDTH-14, HEIGHT-11, WIDTH-1, HEIGHT-11, BLACK);
+    ard.drawRect(WIDTH-15, HEIGHT-12, 15, 11);
+    ard.setCursor(WIDTH-13, HEIGHT-10);
+    ard.print(F("OK"));
+    ard.display();
+    okPressed = startBtnPressed(150);
+    mooveCursor(&cursorPosition);
+    ard.setTextColor(BLACK);
+    ard.setTextBackground(WHITE);
+    ard.drawLine(WIDTH-14, HEIGHT-11, WIDTH-14, HEIGHT-3, WHITE);
+    ard.drawLine(WIDTH-14, HEIGHT-11, WIDTH-1, HEIGHT-11, WHITE);
+    ard.drawRect(WIDTH-15, HEIGHT-12, 15, 11);
+    ard.setCursor(WIDTH-13, HEIGHT-10);
+    ard.print(F("OK"));
+    ard.display();
+    okPressed = startBtnPressed(100);
+    mooveCursor(&cursorPosition);
+  }
+  ard.setTextColor(WHITE);
+  ard.setTextBackground(BLACK);
+  if(okPressed && cursorPosition==0){//validate so goto menu
+    gameMode = 0;
+  }
+  //============================END OK button
+  ard.display();
+}
+
+void mooveCursor(int *cursorPointer){
+  if(ard.pressed(UP_BUTTON) || ard.pressed(RIGHT_BUTTON)){
+    (*cursorPointer)++;
+  }
+  if(ard.pressed(DOWN_BUTTON) || ard.pressed(LEFT_BUTTON)){
+    (*cursorPointer)--;
+  }
 }
