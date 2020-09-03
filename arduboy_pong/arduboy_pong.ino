@@ -6,7 +6,7 @@ float yRacketLeft, yRacketRight, rSpeed, rSize;
 unsigned int scoreP1, scoreP2;
 
 #define MAX_BALL_SPEED 2.0
-#define MIN_BALL_SPEED 0.5
+#define MIN_BALL_SPEED 0.05
 #define MAX_RACKET_SIZE 15
 #define MIN_RACKET_SIZE 5
 #define MAX_RACKET_SPEED 1.2
@@ -34,7 +34,7 @@ void setup() {
 
   dx=-0.09;
   dy=0.1;
-  bSpeed = 0.15;
+  bSpeed = 0.20;
   initGameVars();
 }
 

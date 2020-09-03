@@ -123,7 +123,7 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
   ard.drawLine(15, 10, 25, 10);
   ard.drawLine(20, 10, 20, HEIGHT-5);
   ard.drawLine(15, HEIGHT-5, 25, HEIGHT-5);
-  int yValBallSpeed = map(*ballSpeed, MIN_BALL_SPEED, MAX_BALL_SPEED, 10, HEIGHT-5);
+  int yValBallSpeed = map((*ballSpeed)*10, MIN_BALL_SPEED*10, MAX_BALL_SPEED*10, 10, HEIGHT-5);
   ard.drawLine(18, yValBallSpeed, 22, yValBallSpeed);
   //=====================================end ball speed
   //=========================================racket size
@@ -133,7 +133,7 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
   ard.drawLine(35, 10, 45, 10);
   ard.drawLine(40, 10, 40, HEIGHT-5);
   ard.drawLine(35, HEIGHT-5, 45, HEIGHT-5);
-  int yRacketSize = map(*racketSize, MIN_RACKET_SIZE, MAX_RACKET_SIZE, 10, HEIGHT-5);
+  int yRacketSize = map((*racketSize)*10, MIN_RACKET_SIZE*10, MAX_RACKET_SIZE*10, 10, HEIGHT-5);
   ard.drawLine(38, yRacketSize, 42, yRacketSize);
   //=====================================end racket size
   //========================================racket speed
@@ -143,7 +143,7 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
   ard.drawLine(55, 10, 65, 10);
   ard.drawLine(60, 10, 60, HEIGHT-5);
   ard.drawLine(55, HEIGHT-5, 65, HEIGHT-5);
-  int yRacketSpeed = map(*racketSpeed, MIN_RACKET_SPEED, MAX_RACKET_SPEED, 10, HEIGHT-5);
+  int yRacketSpeed = map((*racketSpeed)*10, MIN_RACKET_SPEED*10, MAX_RACKET_SPEED*10, 10, HEIGHT-5);
   ard.drawLine(58, yRacketSpeed, 62, yRacketSpeed);
   //====================================end racket speed
   //===========================draw OK button

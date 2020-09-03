@@ -20,7 +20,7 @@ void game(){
 
 
 
-void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, const float yRacketRight, const int rSize){
+void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, const float yRacketRight, const float rSize){
   if(*y+1>HEIGHT-1 or *y-1<1){//top or bottom
     *dy=-*dy;
   }
@@ -46,18 +46,22 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
   }
 }
 void mooveRacket(){
-  if(ard.pressed(UP_BUTTON) and yRacketLeft-rSpeed>0){
-    yRacketLeft-=rSpeed;
+  if(yRacketLeft >= 0){
+    if(ard.pressed(UP_BUTTON) and yRacketLeft-rSpeed>0){
+      yRacketLeft-=rSpeed;
+    }
+    if(ard.pressed(DOWN_BUTTON) and yRacketLeft+rSize+rSpeed<HEIGHT){
+      yRacketLeft+=rSpeed;
+    }
   }
-  if(ard.pressed(DOWN_BUTTON) and yRacketLeft+rSize<HEIGHT-1){
-    yRacketLeft+=rSpeed;
-  }
-  
-  if(ard.pressed(B_BUTTON) and yRacketRight-rSpeed>0){
-    yRacketRight-=rSpeed;
-  }
-  if(ard.pressed(A_BUTTON) and yRacketRight+rSize<HEIGHT-1){
-    yRacketRight+=rSpeed;
+
+  if(yRacketRight >= 0){
+    if(ard.pressed(B_BUTTON) and yRacketRight-rSpeed>0){
+      yRacketRight-=rSpeed;
+    }
+    if(ard.pressed(A_BUTTON) and yRacketRight+rSize+rSpeed<HEIGHT){
+      yRacketRight+=rSpeed;
+    }
   }
 }
 
