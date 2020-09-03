@@ -1,8 +1,14 @@
 #include <Arduboy2.h>
 Arduboy2 ard;
 
-int bSpeed, rSize;
+int bSpeed, rSpeed, rSize;
 int settingCursor;
+#define MAX_BALL_SPEED 50
+#define MIN_BALL_SPEED 10
+#define MAX_RACKET_SIZE 30
+#define MIN_RACKET_SIZE 5
+#define MAX_RACKET_SPEED 30
+#define MIN_RACKET_SPEED 5
 
 /**
  * 0 == Menu
@@ -16,9 +22,10 @@ void setup() {
   ard.setFrameRate(15);
 
   bSpeed = 40;
+  rSpeed = 15;
   rSize = 10;
   gameMode = 0;
-  settingCursor = 2;
+  settingCursor = 3;
 }
 
 void loop() {
@@ -30,7 +37,7 @@ void loop() {
     game();
     break;
     case 2:
-    setting(&settingCursor, &bSpeed, &rSize);
+    setting(&settingCursor, &bSpeed, &rSize, &rSpeed);
     break;
     default:
     menu();
@@ -157,7 +164,7 @@ bool startBtnPressed(const unsigned int waitTimeMs){
   return false;
 }
 
-void setting(int *cursorPosition, int *ballSpeed, int *racketSize){
+void setting(int *cursorPosition, int *ballSpeed, int *racketSize, int *racketSpeed){
   mooveCursor(cursorPosition);
   ard.clear();
   ard.setCursor(0,0);
@@ -167,16 +174,23 @@ void setting(int *cursorPosition, int *ballSpeed, int *racketSize){
   ard.print(*ballSpeed);
   ard.print("\n racket size : ");
   ard.print(*racketSize);
+  ard.print("\n racket speed : ");
+  ard.print(*racketSpeed);
   //=========================================ball speed
-  if(*cursorPosition==2){
-    *ballSpeed = updateValue(*ballSpeed, 20, 60);
+  if(*cursorPosition==3){
+    updateValue(ballSpeed, 20, 60);
   }
   //=====================================end ball speed
   //=========================================racket size
-  if(*cursorPosition==1){
-    *racketSize = updateValue(*racketSize, 5, 30);
+  if(*cursorPosition==2){
+    updateValue(racketSize, 5, 30);
   }
   //=====================================end racket size
+  //========================================racket speed
+  if(*cursorPosition==1){
+    updateValue(racketSpeed, 5, 30);
+  }
+  //====================================end racket speed
   //===========================draw OK button
   ard.drawRect(WIDTH-15, HEIGHT-12, 15, 11);
   ard.setCursor(WIDTH-13, HEIGHT-10);
@@ -215,22 +229,22 @@ void setting(int *cursorPosition, int *ballSpeed, int *racketSize){
 
 void mooveCursor(int *cursorPointer){
   if(ard.pressed(RIGHT_BUTTON)){
-    delay(170);
+    delay(180);
     (*cursorPointer)--;
   }
   if(ard.pressed(LEFT_BUTTON)){
-    delay(170);
+    delay(180);
     (*cursorPointer)++;
   }
 }
 
-int updateValue(const int initValue, const int infVal, const int supVal){
-  if(ard.pressed(UP_BUTTON) && initValue+1<=supVal){
-    delay(170);
-    return initValue+1;
+void updateValue(int *initValue, const int infVal, const int supVal){
+  if(ard.pressed(UP_BUTTON) && *initValue+1<=supVal){
+    delay(180);
+    (*initValue)++;
   }
-  if(ard.pressed(DOWN_BUTTON) && initValue-1>=infVal){
-    delay(170);
-    return initValue-1;
+  if(ard.pressed(DOWN_BUTTON) && *initValue-1>=infVal){
+    delay(180);
+    (*initValue)--;
   }
 }
