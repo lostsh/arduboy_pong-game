@@ -109,42 +109,68 @@ bool startBtnPressed(const unsigned int waitTimeMs){
 void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *racketSpeed){
   mooveCursor(cursorPosition, 0, 3);
   ard.clear();
-  ard.setCursor(7,0);
+
+  switch(*cursorPosition){
+    case 3:
+    ard.drawLine(8,1,12,1);
+    ard.drawLine(9,2,11,2);
+    ard.drawLine(10,3,10,3);
+    break;
+    case 2:
+    ard.drawLine(28,1,32,1);
+    ard.drawLine(29,2,31,2);
+    ard.drawLine(30,3,30,3);
+    break;
+    case 1:
+    ard.drawLine(48,1,52,1);
+    ard.drawLine(49,2,51,2);
+    ard.drawLine(50,3,50,3);
+    break;
+  }
+  ard.setCursor(60,0);
+  ard.print("Ball speed:");
+  ard.setCursor(60,10);
   ard.print(*ballSpeed);
-  ard.print(" ");
+  ard.setCursor(60,20);
+  ard.print("Rack size:");
+  ard.setCursor(60,30);
   ard.print(*racketSize);
-  ard.print(" ");
+  ard.setCursor(60,40);
+  ard.print("Rack speed:");
+  ard.setCursor(60,50);
   ard.print(*racketSpeed);
+
+  
   //=========================================ball speed
   if(*cursorPosition==3){
     updateValue(ballSpeed, MIN_BALL_SPEED, MAX_BALL_SPEED);
     setBallSpeed(*ballSpeed);//----------------------------------------------------just a test need improove
   }
-  ard.drawLine(15, 10, 25, 10);
-  ard.drawLine(20, 10, 20, HEIGHT-5);
-  ard.drawLine(15, HEIGHT-5, 25, HEIGHT-5);
+  ard.drawLine(5, 10, 15, 10);
+  ard.drawLine(10, 10, 10, HEIGHT-5);
+  ard.drawLine(5, HEIGHT-5, 15, HEIGHT-5);
   int yValBallSpeed = map((*ballSpeed)*10, MIN_BALL_SPEED*10, MAX_BALL_SPEED*10, 10, HEIGHT-5);
-  ard.drawLine(18, yValBallSpeed, 22, yValBallSpeed);
+  ard.drawLine(8, yValBallSpeed, 12, yValBallSpeed);
   //=====================================end ball speed
   //=========================================racket size
   if(*cursorPosition==2){
     updateValue(racketSize, MIN_RACKET_SIZE, MAX_RACKET_SIZE);
   }
-  ard.drawLine(35, 10, 45, 10);
-  ard.drawLine(40, 10, 40, HEIGHT-5);
-  ard.drawLine(35, HEIGHT-5, 45, HEIGHT-5);
+  ard.drawLine(25, 10, 35, 10);
+  ard.drawLine(30, 10, 30, HEIGHT-5);
+  ard.drawLine(25, HEIGHT-5, 35, HEIGHT-5);
   int yRacketSize = map((*racketSize)*10, MIN_RACKET_SIZE*10, MAX_RACKET_SIZE*10, 10, HEIGHT-5);
-  ard.drawLine(38, yRacketSize, 42, yRacketSize);
+  ard.drawLine(28, yRacketSize, 32, yRacketSize);
   //=====================================end racket size
   //========================================racket speed
   if(*cursorPosition==1){
     updateValue(racketSpeed, MIN_RACKET_SPEED, MAX_RACKET_SPEED);
   }
-  ard.drawLine(55, 10, 65, 10);
-  ard.drawLine(60, 10, 60, HEIGHT-5);
-  ard.drawLine(55, HEIGHT-5, 65, HEIGHT-5);
+  ard.drawLine(45, 10, 55, 10);
+  ard.drawLine(50, 10, 50, HEIGHT-5);
+  ard.drawLine(45, HEIGHT-5, 55, HEIGHT-5);
   int yRacketSpeed = map((*racketSpeed)*10, MIN_RACKET_SPEED*10, MAX_RACKET_SPEED*10, 10, HEIGHT-5);
-  ard.drawLine(58, yRacketSpeed, 62, yRacketSpeed);
+  ard.drawLine(48, yRacketSpeed, 52, yRacketSpeed);
   //====================================end racket speed
   //===========================draw OK button
   ard.drawRect(WIDTH-15, HEIGHT-12, 15, 11);
