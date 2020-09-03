@@ -1,10 +1,13 @@
 void game(){
   ard.clear();
-  drawWalls(true, true, true, false);
+  drawWalls(true, yRacketRight<0, true, yRacketLeft<0);
+  if(yRacketRight>=0){
+    drawMidLine();
+  }
   mooveBall(&x, &y, dx, dy);
   drawBall(x,y);
   mooveRacket();
-  drawRacket(yRacketLeft, -1, rSize);
+  drawRacket(yRacketLeft, yRacketRight, rSize);
   bounce(&x, &y, &dx, &dy, yRacketLeft, yRacketRight, rSize);
   if(isBallOutOfLimit(x, y)){
     drawGameOver();
@@ -29,9 +32,9 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
     *dx=-*dx;
     //speed increase
     if(*x+1>WIDTH-1 && ((yRacketRight <= *y && *y <= yRacketRight+1) or (yRacketRight+rSize-1 <= *y && *y <= yRacketRight+rSize))){
-      //updateBallSpeed(true);
+      updateBallAngle(true);
     }else{
-      //updateBallSpeed(false);
+      //decrease ball speed
     }
   }
   //if there is no player left of the ball is on the racket then bounce
@@ -39,9 +42,9 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
     *dx=-*dx;
     //speed increase
     if(*x-1<1 && ((yRacketLeft <= *y && *y <= yRacketLeft+1) or (yRacketLeft+rSize-1 <= *y && *y <= yRacketLeft+rSize))){
-      //updateBallSpeed(true);
+      updateBallAngle(true);
     }else{
-      //updateBallSpeed(false);
+      //decrease ball speed
     }
   }
 }
@@ -85,6 +88,13 @@ void drawWalls(bool top, bool right, bool bottom, bool left){
     ard.drawLine(0,0,0,HEIGHT-1);
   }
 }
+void drawMidLine(){
+  for(int i=0;i<=HEIGHT;i+=8){
+    ard.drawLine((WIDTH/2)-1,i,(WIDTH/2)-1,i+4);
+    ard.drawLine(WIDTH/2,i,WIDTH/2,i+4);
+    ard.drawLine((WIDTH/2)+1,i,(WIDTH/2)+1,i+4);
+  }
+}
 
 void drawBall(const int x, const int y){
   ard.drawLine(x-1,y-1,x-1,y+1);//left
@@ -92,10 +102,18 @@ void drawBall(const int x, const int y){
   ard.drawLine(x+1,y-1,x+1,y+1);//right
 }
 
-void updateBallSpeed(bool increase){
+void updateBallAngle(bool increase){
+  //================================just to do not foret this is the way to bounce on the top & the bottom of the racket
+  //only a test okay ?
+  if(y <= yRacletLeft || y <= yRacletRigth){
+    dy=-dy;
+  }
+  if(y >= yRacletLeft+rSize || y >= yRacletRigth+rSize){
+    dx=-dx;
+  }
+  //================================
   if(increase){
-    dx=dx*bSpeed;
-    dy=dy*bSpeed;
+    //increase speed, update angle
   }else{
     //decrease speed please
     if(dx > MIN_BALL_SPEED){

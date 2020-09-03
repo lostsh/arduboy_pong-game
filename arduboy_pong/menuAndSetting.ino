@@ -107,26 +107,33 @@ bool startBtnPressed(const unsigned int waitTimeMs){
 
 
 void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *racketSpeed){
-  mooveCursor(cursorPosition, 0, 3);
+  mooveCursor(cursorPosition, 0, 4);
   ard.clear();
 
   switch(*cursorPosition){
-    case 3:
+    case 4://Ball speed
     ard.drawLine(8,1,12,1);
     ard.drawLine(9,2,11,2);
     ard.drawLine(10,3,10,3);
     break;
-    case 2:
+    case 3://Racket size
     ard.drawLine(28,1,32,1);
     ard.drawLine(29,2,31,2);
     ard.drawLine(30,3,30,3);
     break;
-    case 1:
+    case 2://Racket speed
     ard.drawLine(48,1,52,1);
     ard.drawLine(49,2,51,2);
     ard.drawLine(50,3,50,3);
     break;
+    case 1:
+    ard.drawLine(70,1,74,1);
+    ard.drawLine(71,2,73,2);
+    ard.drawLine(72,3,72,3);
+    break;
   }
+  
+  /*
   ard.setCursor(60,0);
   ard.print("Ball speed:");
   ard.setCursor(60,10);
@@ -138,11 +145,9 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
   ard.setCursor(60,40);
   ard.print("Rack speed:");
   ard.setCursor(60,50);
-  ard.print(*racketSpeed);
-
-  
+  ard.print(*racketSpeed);*/
   //=========================================ball speed
-  if(*cursorPosition==3){
+  if(*cursorPosition==4){
     updateValue(ballSpeed, MIN_BALL_SPEED, MAX_BALL_SPEED);
     setBallSpeed(*ballSpeed);//----------------------------------------------------just a test need improove
   }
@@ -153,7 +158,7 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
   ard.drawLine(8, yValBallSpeed, 12, yValBallSpeed);
   //=====================================end ball speed
   //=========================================racket size
-  if(*cursorPosition==2){
+  if(*cursorPosition==3){
     updateValue(racketSize, MIN_RACKET_SIZE, MAX_RACKET_SIZE);
   }
   ard.drawLine(25, 10, 35, 10);
@@ -163,7 +168,7 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
   ard.drawLine(28, yRacketSize, 32, yRacketSize);
   //=====================================end racket size
   //========================================racket speed
-  if(*cursorPosition==1){
+  if(*cursorPosition==2){
     updateValue(racketSpeed, MIN_RACKET_SPEED, MAX_RACKET_SPEED);
   }
   ard.drawLine(45, 10, 55, 10);
@@ -172,6 +177,18 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
   int yRacketSpeed = map((*racketSpeed)*10, MIN_RACKET_SPEED*10, MAX_RACKET_SPEED*10, 10, HEIGHT-5);
   ard.drawLine(48, yRacketSpeed, 52, yRacketSpeed);
   //====================================end racket speed
+  //=========================================Two player
+  ard.drawRect(70, 6, 5, 5);
+  ard.setCursor(80, 5);
+  ard.print("Player 2");
+  if(yRacketRight>=0){
+    ard.drawLine(70,6,74,10);
+    ard.drawLine(70,10,74,6);
+  }
+  if(*cursorPosition==1 && startBtnPressed(1)){
+    yRacketRight=yRacketRight*(-1);
+  }
+  //=====================================end two player
   //===========================draw OK button
   ard.drawRect(WIDTH-15, HEIGHT-12, 15, 11);
   ard.setCursor(WIDTH-13, HEIGHT-10);

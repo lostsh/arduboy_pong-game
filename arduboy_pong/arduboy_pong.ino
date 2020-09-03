@@ -30,7 +30,7 @@ void setup() {
   rSpeed = 0.2;
   rSize = 10;
   gameMode = 0;
-  settingCursor = 3;
+  settingCursor = 4;
 
   dx=-0.09;
   dy=0.1;
