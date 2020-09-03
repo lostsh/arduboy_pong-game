@@ -34,10 +34,8 @@ void updateBallSpeed(bool increase){
   }
 }
 void mooveBall(float *x, float *y, const float dx, const float dy){
-  if(*x >= -2 && *x <= WIDTH+2){
+  if(!isBallOutOfLimit(*x, *y)){
     *x+=dx;
-  }
-  if(*y >= -2 && *y <= HEIGHT+2){
     *y+=dy;
   }
 }
