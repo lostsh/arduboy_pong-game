@@ -105,12 +105,13 @@ void drawBall(const int x, const int y){
 void updateBallAngle(bool increase){
   //================================just to do not foret this is the way to bounce on the top & the bottom of the racket
   //only a test okay ?
+  /*
   if(y <= yRacletLeft || y <= yRacletRigth){
     dy=-dy;
   }
   if(y >= yRacletLeft+rSize || y >= yRacletRigth+rSize){
     dx=-dx;
-  }
+  }*/
   //================================
   if(increase){
     //increase speed, update angle

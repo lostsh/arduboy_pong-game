@@ -132,20 +132,37 @@ void setting(int *cursorPosition, float *ballSpeed, float *racketSize, float *ra
     ard.drawLine(72,3,72,3);
     break;
   }
-  
-  /*
-  ard.setCursor(60,0);
-  ard.print("Ball speed:");
-  ard.setCursor(60,10);
+
+  //========================indicator & values
+  //Ball Speed
+  ard.setCursor(70,20);
+  ard.print("v B: ");
+  //arrow
+  ard.drawLine(70,18,77,18);
+  ard.drawLine(75,16,77,18);
+  ard.drawLine(75,20,77,18);
   ard.print(*ballSpeed);
-  ard.setCursor(60,20);
-  ard.print("Rack size:");
-  ard.setCursor(60,30);
+  //Racket Size
+  ard.drawLine(70,33,70+(*racketSize),33);
+  ard.drawLine(70,34,70+(*racketSize),34);
+  //arrow
+  ard.drawLine(70,30,70+(*racketSize),30);
+  ard.drawPixel(69+(*racketSize),29);
+  ard.drawPixel(69+(*racketSize),31);
+  ard.drawPixel(71,29);
+  ard.drawPixel(71,31);
+  ard.setCursor(99,30);
   ard.print(*racketSize);
-  ard.setCursor(60,40);
-  ard.print("Rack speed:");
-  ard.setCursor(60,50);
-  ard.print(*racketSpeed);*/
+  //Racket Speed
+  ard.setCursor(70,40);
+  ard.print("v R: ");
+  //arrow
+  ard.drawLine(70,38,77,38);
+  ard.drawLine(75,36,77,38);
+  ard.drawLine(75,40,77,38);
+  ard.print(*racketSpeed);
+  
+  
   //=========================================ball speed
   if(*cursorPosition==4){
     updateValue(ballSpeed, MIN_BALL_SPEED, MAX_BALL_SPEED);
