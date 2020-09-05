@@ -26,13 +26,17 @@ void game(){
       initBallVars();
       if(scoreP1 >= 3||scoreP2 >=3){
         drawGameOver();
-        initGameVars();
         ard.setCursor(13,42);
         ard.print("Player ");
-        ard.print(scoreP1>scoreP2?1:2);
+        if(scoreP1>scoreP2){
+          ard.print("1");
+        }else{
+          ard.print("2");
+        }
         ard.print(" win !");
         ard.display();
         delay(2000);
+        initGameVars();
         gameMode = 0;
       }
     }
