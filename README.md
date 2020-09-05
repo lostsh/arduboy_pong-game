@@ -21,6 +21,6 @@ This game is only the first version of the code, so it is very ugly !
 
 ## Download
 
-latest release [available here](). ;)
+latest release [available here](https://github.com/lostsh/arduboy_pong-game/releases/tag/V1.0). ;)
 
 For more, checkout [GitHub repo](https://github.com/lostsh/arduboy_pong-game) then enjoy playing Pong !
