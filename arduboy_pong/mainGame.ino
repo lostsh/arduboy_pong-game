@@ -28,7 +28,7 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
     *dy=-*dy;
   }
   //if there is no player right or the ball is on the racket then bounce
-  if( yRacketRight<0 && *x+1>WIDTH-1 || (yRacketRight>=0 && *x+1>WIDTH-3 && yRacketRight<=*y&&*y<=yRacketRight+rSize) ){
+  if( yRacketRight<0 && *x+1>WIDTH-1 || (yRacketRight>=0 && *x+1>=WIDTH-3 && yRacketRight<=*y&&*y<=yRacketRight+rSize) ){
     *dx=-*dx;
     if(yRacketRight>=0 && *x+1>=WIDTH-3 && *x-1<=WIDTH && (yRacketRight+1>=*y || yRacketRight+rSize-1<=*y)){
       *dy=-*dy;
@@ -36,11 +36,24 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
     }
   }
   //if there is no player left of the ball is on the racket then bounce
-  if((yRacketLeft<0 && *x-1<1) or (yRacketLeft>=0 && *x-1<3 && (yRacketLeft <= *y && yRacketLeft+rSize >= *y))){
+  if((yRacketLeft<0 && *x-1<1) or (yRacketLeft>=0 && *x-1<=3 && (yRacketLeft <= *y && yRacketLeft+rSize >= *y))){
     *dx=-*dx;
     if(yRacketLeft>=0 && *x+1>=0 && *x-1<=3 && (yRacketLeft+1>=*y || yRacketLeft+rSize-1<=*y)){
       *dy=-*dy;
       updateBallSpeed(true);
+      //modifi bal angle
+      *dy=*dy>0?*dy+0.09:*dy-0.09;
+    }else{
+      unsigned int diff = max(*dx,*dy) -min(*dy,*dx);
+      ard.setCursor(0,0);
+      ard.print(diff);
+      ard.display();
+      delay(500);
+      *dx=*dx>*dy?*dx+diff:*dx-diff;
+      *dy=*dy>*dx?*dy+diff:*dy-diff;
+      /*
+      *dx=*dx>0?*dx-0.09:*dx+0.09;
+      *dy=*dy>0?*dy-0.09:*dy+0.09;*/
     }
   }
 }
