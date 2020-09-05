@@ -1,6 +1,7 @@
 void game(){
   ard.clear();
   drawWalls(true, yRacketRight<0, true, yRacketLeft<0);
+  drawScore(yRacketRight>=0, scoreP1, scoreP2);
   if(yRacketRight>=0){
     drawMidLine();
   }
@@ -8,13 +9,33 @@ void game(){
   drawBall(x,y);
   mooveRacket();
   drawRacket(yRacketLeft, yRacketRight, rSize);
-  bounce(&x, &y, &dx, &dy, yRacketLeft, yRacketRight, rSize);
+  bounce(&x, &y, &dx, &dy, yRacketLeft, yRacketRight, rSize, &scoreP1, &scoreP2);
   if(isBallOutOfLimit(x, y)){
-    drawGameOver();
-    delay(1200);
-    initGameVars();
-    //=================================================================just for test
-    gameMode = 0;
+    if(yRacketRight<0){
+      drawGameOver();
+      delay(1200);
+      initGameVars();
+      gameMode = 0;
+    }else{//if there is two players
+      if(x>WIDTH/2){
+        scoreP1++;
+      }else{
+        scoreP2++;
+      }
+      delay(500);
+      initBallVars();
+      if(scoreP1 >= 3||scoreP2 >=3){
+        drawGameOver();
+        initGameVars();
+        ard.setCursor(13,42);
+        ard.print("Player ");
+        ard.print(scoreP1>scoreP2?1:2);
+        ard.print(" win !");
+        ard.display();
+        delay(2000);
+        gameMode = 0;
+      }
+    }
   }
   ard.display();
 }
@@ -23,7 +44,7 @@ void game(){
 
 
 
-void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, const float yRacketRight, const float rSize){
+void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, const float yRacketRight, const float rSize,unsigned int *scorePlayerOne,unsigned int *scorePlayerTwo){
   if(*y+1>HEIGHT-1 or *y-1<1){//top or bottom
     *dy=-*dy;
   }
@@ -101,6 +122,19 @@ void drawMidLine(){
     ard.drawLine((WIDTH/2)-1,i,(WIDTH/2)-1,i+4);
     ard.drawLine(WIDTH/2,i,WIDTH/2,i+4);
     ard.drawLine((WIDTH/2)+1,i,(WIDTH/2)+1,i+4);
+  }
+}
+
+void drawScore(bool twoPlayer, const unsigned int scorePlayer1, const unsigned int scorePlayer2){
+  if(twoPlayer){
+    //drawScoreOfTwoPlayers
+    int leftScorePadding = String(scorePlayer1).length()*5;
+    ard.setCursor(((WIDTH/2)-10)-leftScorePadding,5);
+    ard.print(scorePlayer1);
+    ard.setCursor((WIDTH/2)+10,5);
+    ard.print(scorePlayer2);
+  }else{
+    //drawScore of player one
   }
 }
 

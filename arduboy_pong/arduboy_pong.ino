@@ -56,10 +56,13 @@ void loop() {
 }
 
 void initGameVars(){
-  x = WIDTH/2;
-  y = HEIGHT/2;
   scoreP1 = 0;
   scoreP2 = 0;
+  initBallVars();
+}
+void initBallVars(){
+  x = WIDTH/2;
+  y = HEIGHT/2;
   setBallSpeed(bSpeed);
 }
 
