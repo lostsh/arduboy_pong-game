@@ -34,10 +34,11 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
       *dy=-*dy;
       updateBallSpeed(true);
       //modifi bal angle
-      *dy=*dy>0?*dy+0.05:*dy-0.05;
+      *dy=*dy>0?*dy+0.02:*dy-0.02;
+      *dx=*dx>0?*dx-0.02:*dx+0.02;
     }else{
-      *dy=*dy>0?*dy-0.05:*dy+0.05;
-      *dx=*dx>0?*dx+0.05:*dx-0.05;
+      *dy=*dy>0?*dy-0.02:*dy+0.02;
+      *dx=*dx>0?*dx+0.02:*dx-0.02;
     }
   }
   //if there is no player left of the ball is on the racket then bounce
@@ -47,11 +48,11 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
       *dy=-*dy;
       updateBallSpeed(true);
       //modifi bal angle
-      *dy=*dy>0?*dy+0.05:*dy-0.05;
-      //*dx=*dy>0?*dx-0.05:*dx+0.05;
+      *dy=*dy>0?*dy+0.02:*dy-0.02;
+      *dx=*dx>0?*dx-0.02:*dx+0.02;
     }else{
-      *dy=*dy>0?*dy-0.05:*dy+0.05;
-      *dx=*dx>0?*dx+0.05:*dx-0.05;
+      *dy=*dy>0?*dy-0.02:*dy+0.02;
+      *dx=*dx>0?*dx+0.02:*dx-0.02;
     }
   }
 }
