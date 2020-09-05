@@ -28,23 +28,19 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
     *dy=-*dy;
   }
   //if there is no player right or the ball is on the racket then bounce
-  if( yRacketRight<0 && *x+1>WIDTH-1 || (yRacketRight>=0 && *x+1>WIDTH-1 && yRacketRight<=*y&&*y<=yRacketRight+rSize) ){
+  if( yRacketRight<0 && *x+1>WIDTH-1 || (yRacketRight>=0 && *x+1>WIDTH-3 && yRacketRight<=*y&&*y<=yRacketRight+rSize) ){
     *dx=-*dx;
-    //speed increase
-    if(*x+1>WIDTH-1 && ((yRacketRight <= *y && *y <= yRacketRight+1) or (yRacketRight+rSize-1 <= *y && *y <= yRacketRight+rSize))){
-      updateBallAngle(true);
-    }else{
-      //decrease ball speed
+    if(yRacketRight>=0 && *x+1>=WIDTH-3 && *x-1<=WIDTH && (yRacketRight+1>=*y || yRacketRight+rSize-1<=*y)){
+      *dy=-*dy;
+      updateBallSpeed(true);
     }
   }
   //if there is no player left of the ball is on the racket then bounce
-  if((yRacketLeft<0 && *x-1<1) or (yRacketLeft>=0 && *x-1<1 && (yRacketLeft <= *y && yRacketLeft+rSize >= *y))){
+  if((yRacketLeft<0 && *x-1<1) or (yRacketLeft>=0 && *x-1<3 && (yRacketLeft <= *y && yRacketLeft+rSize >= *y))){
     *dx=-*dx;
-    //speed increase
-    if(*x-1<1 && ((yRacketLeft <= *y && *y <= yRacketLeft+1) or (yRacketLeft+rSize-1 <= *y && *y <= yRacketLeft+rSize))){
-      updateBallAngle(true);
-    }else{
-      //decrease ball speed
+    if(yRacketLeft>=0 && *x+1>=0 && *x-1<=3 && (yRacketLeft+1>=*y || yRacketLeft+rSize-1<=*y)){
+      *dy=-*dy;
+      updateBallSpeed(true);
     }
   }
 }
@@ -102,27 +98,15 @@ void drawBall(const int x, const int y){
   ard.drawLine(x+1,y-1,x+1,y+1);//right
 }
 
-void updateBallAngle(bool increase){
-  //================================just to do not foret this is the way to bounce on the top & the bottom of the racket
-  //only a test okay ?
-  /*
-  if(y <= yRacletLeft || y <= yRacletRigth){
-    dy=-dy;
-  }
-  if(y >= yRacletLeft+rSize || y >= yRacletRigth+rSize){
-    dx=-dx;
-  }*/
-  //================================
+void updateBallSpeed(bool increase){
   if(increase){
     //increase speed, update angle
+    dx=dx*1.1;
+    dy=dy*1.1;
   }else{
+    dx=dx*0.95;
+    dy=dy*0.95;
     //decrease speed please
-    if(dx > MIN_BALL_SPEED){
-      dx=dx*0.95;
-    }
-    if(dy > MIN_BALL_SPEED){
-      dy=dy*0.95;
-    }
   }
 }
 void mooveBall(float *x, float *y, const float dx, const float dy){
@@ -133,17 +117,19 @@ void mooveBall(float *x, float *y, const float dx, const float dy){
 }
 
 bool isBallOutOfLimit(const float x, const float y){
-  return (x < -1 || x > WIDTH+1 || y < -1 || y > HEIGHT+1);
+  return (x-1 < -1 || x+1 > WIDTH+1 || y-1 < -1 || y+1 > HEIGHT+1);
 }
 
 void drawRacket(const float yRacketLeft, const float yRacketRight, const int rSize){
   if(yRacketLeft >= 0){
-    ard.drawLine(0,yRacketLeft,0,yRacketLeft+rSize);
+    ard.drawLine(0,yRacketLeft+1,0,yRacketLeft+rSize-1);
     ard.drawLine(1,yRacketLeft,1,yRacketLeft+rSize);
+    ard.drawLine(2,yRacketLeft+1,2,yRacketLeft+rSize-1);
   }
   if(yRacketRight >= 0){
-    ard.drawLine(WIDTH-1,yRacketRight,WIDTH-1,yRacketRight+rSize);
+    ard.drawLine(WIDTH-1,yRacketRight+1,WIDTH-1,yRacketRight+rSize-1);
     ard.drawLine(WIDTH-2,yRacketRight,WIDTH-2,yRacketRight+rSize);
+    ard.drawLine(WIDTH-3,yRacketRight+1,WIDTH-3,yRacketRight+rSize-1);
   }
 }
 
