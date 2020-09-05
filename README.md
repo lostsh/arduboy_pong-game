@@ -17,7 +17,7 @@ This game is only the first version of the code, so it is very ugly !
 
 |Main menu|Game menu|Settings|Game|
 |---------|---------|--------|----|
-|![main menu](mainMenu.gif)|![game menu](gameMenu.gif)|![settings](settings.JPG)|![game in two player mode](game.JPG)|
+|![main menu](mainMenu.gif)|![game menu](gameMenu.gif)|![settings](settings.JPG)|![game in two player mode](gaming.JPG)|
 
 ## Download
 
