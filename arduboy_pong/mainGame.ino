@@ -33,6 +33,11 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
     if(yRacketRight>=0 && *x+1>=WIDTH-3 && *x-1<=WIDTH && (yRacketRight+1>=*y || yRacketRight+rSize-1<=*y)){
       *dy=-*dy;
       updateBallSpeed(true);
+      //modifi bal angle
+      *dy=*dy>0?*dy+0.05:*dy-0.05;
+    }else{
+      *dy=*dy>0?*dy-0.05:*dy+0.05;
+      *dx=*dx>0?*dx+0.05:*dx-0.05;
     }
   }
   //if there is no player left of the ball is on the racket then bounce
@@ -42,18 +47,11 @@ void bounce(float *x, float *y, float *dx, float *dy, const float yRacketLeft, c
       *dy=-*dy;
       updateBallSpeed(true);
       //modifi bal angle
-      *dy=*dy>0?*dy+0.09:*dy-0.09;
+      *dy=*dy>0?*dy+0.05:*dy-0.05;
+      //*dx=*dy>0?*dx-0.05:*dx+0.05;
     }else{
-      unsigned int diff = max(*dx,*dy) -min(*dy,*dx);
-      ard.setCursor(0,0);
-      ard.print(diff);
-      ard.display();
-      delay(500);
-      *dx=*dx>*dy?*dx+diff:*dx-diff;
-      *dy=*dy>*dx?*dy+diff:*dy-diff;
-      /*
-      *dx=*dx>0?*dx-0.09:*dx+0.09;
-      *dy=*dy>0?*dy-0.09:*dy+0.09;*/
+      *dy=*dy>0?*dy-0.05:*dy+0.05;
+      *dx=*dx>0?*dx+0.05:*dx-0.05;
     }
   }
 }
